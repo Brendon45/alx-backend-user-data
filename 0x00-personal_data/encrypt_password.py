@@ -2,13 +2,14 @@
 """Python Module for hashing and validating passwords using bcrypt"""
 import bcrypt
 
+
 def hash_password(password: str) -> bytes:
     """
     Function to hash a password using bcrypt.
-    
+
     Args:
     - password (str): The password to hash.
-    
+
     Returns:
     - bytes: The hashed password as a byte string.
     """
@@ -20,14 +21,15 @@ def hash_password(password: str) -> bytes:
     hashed = bcrypt.hashpw(encoded_psw, salt)
     return hashed
 
+
 def is_valid(hashed_password: bytes, password: str) -> bool:
     """
     Function to validate a password against a hashed password using bcrypt.
-    
+
     Args:
     - hashed_password (bytes): The hashed password.
     - password (str): The password to validate.
-    
+
     Returns:
     - bool: True if the password is valid, False otherwise.
     """
