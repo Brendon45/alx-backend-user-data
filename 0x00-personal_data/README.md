@@ -1,0 +1,17 @@
+# 0x00. Personal data
+
+## Back-end
+
+## Authentification
+
+![PERSONAL](https://private-user-images.githubusercontent.com/125453474/302913548-8bf68917-255c-4b6e-867f-e27671a54223.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjI1MDQxODQsIm5iZiI6MTcyMjUwMzg4NCwicGF0aCI6Ii8xMjU0NTM0NzQvMzAyOTEzNTQ4LThiZjY4OTE3LTI1NWMtNGI2ZS04NjdmLWUyNzY3MWE1NDIyMy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQwODAxJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MDgwMVQwOTE4MDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wNDcyYTM4OTc2NzA0OGEzYTdhZjFkODlkZmQwMDM1Njg0ZDk3MDUyMmQzMmEwZDk2MzVmZjEzOTc0ODcyODJlJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.U5E3xpJjIlanQtvarETu7vJO5p1ddu7jbkEL0XOghWI)
+
+
+## Resources
+
+__Read or watch:__
+
+- [What Is PII, non-PII, and Personal Data?]
+- [logging documentation]
+- [bcrypt package]
+- [Logging to Files, Setting Levels, and Formatting]
