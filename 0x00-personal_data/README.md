@@ -128,9 +128,9 @@ DO NOT extrapolate `FORMAT` manually. The `format` method should be less than 5 
     bob@dylan:~$
 __Repo:__
 
-  GitHub repository: `alx-backend-user-data`
-  Directory: `0x00-personal_data`
-  File: `filtered_logger.py`
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x00-personal_data`
+  - File: `filtered_logger.py`
 
 ## 2. Create logger
 
