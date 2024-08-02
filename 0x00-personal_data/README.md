@@ -73,6 +73,11 @@ Arguments:
       name=egg;email=eggmin@eggsample.com;password=xxx;date_of_birth=xxx;
       name=bob;email=bob@dylan.com;password=xxx;date_of_birth=xxx;
       bob@dylan:~$
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x00-personal_data`
+  - File: `filtered_logger.py`
 
 ## 1. Log formatter
 
@@ -121,6 +126,11 @@ DO NOT extrapolate `FORMAT` manually. The `format` method should be less than 5 
     bob@dylan:~$ ./1-main.py
     [HOLBERTON] my_logger INFO 2019-11-19 18:24:25,105: name=Bob; email=***; ssn=***; password=***;
     bob@dylan:~$
+__Repo:__
+
+  GitHub repository: `alx-backend-user-data`
+  Directory: `0x00-personal_data`
+  File: `filtered_logger.py`
 
 ## 2. Create logger
 
@@ -156,6 +166,11 @@ __Tips:__
         <class 'logging.Logger'>
         PII_FIELDS: 5
         bob@dylan:~$
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x00-personal_data`
+  - File: `filtered_logger.py`
 
 ## 3. Connect to secure database
 
@@ -215,6 +230,11 @@ Implement a `get_db` function that returns a connector to the database (`mysql.c
         bob@dylan:~$ PERSONAL_DATA_DB_USERNAME=root PERSONAL_DATA_DB_PASSWORD=root PERSONAL_DATA_DB_HOST=localhost PERSONAL_DATA_DB_NAME=my_db ./3-main.py
         2
         bob@dylan:~$
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x00-personal_data`
+  - File: `filtered_logger.py`
 
 ## 4. Read and filter data
 
@@ -270,6 +290,11 @@ Filtered fields:
       [HOLBERTON] user_data INFO 2019-11-19 18:37:59,596: name=***; email=***; phone=***; ssn=***; password=***; ip=60ed:c396:2ff:244:bbd0:9208:26f2:93ea; last_login=2019-11-14 06:14:24; user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36;
       [HOLBERTON] user_data INFO 2019-11-19 18:37:59,621: name=***; email=***; phone=***; ssn=***; password=***; ip=f724:c5d1:a14d:c4c5:bae2:9457:3769:1969; last_login=2019-11-14 06:16:19; user_agent=Mozilla/5.0 (Linux; U; Android 4.1.2; de-de; GT-I9100 Build/JZO54K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30;
       bob@dylan:~$
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x00-personal_data`
+  - File: `filtered_logger.py`
 
 ## 5. Encrypting passwords
 
@@ -296,6 +321,12 @@ Use the `bcrypt` package to perform the hashing (with `hashpw`).
     b'$2b$12$Fnjf6ew.oPZtVksngJjh1.vYCnxRjPm2yt18kw6AuprMRpmhJVxJO'
     b'$2b$12$xSAw.bxfSTAlIBglPMXeL.SJnzme3Gm0E7eOEKOVV2OhqOakyUN5m'
     bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x00-personal_data`
+  - File: `encrypt_password.py`
 
 ## 6. Check valid password
 
@@ -327,3 +358,9 @@ Use `bcrypt` to validate that the provided password matches the hashed password.
     b'$2b$12$Fnjf6ew.oPZtVksngJjh1.vYCnxRjPm2yt18kw6AuprMRpmhJVxJO'
     True
     bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x00-personal_data`
+  - File: `encrypt_password.py`
