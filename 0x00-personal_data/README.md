@@ -303,8 +303,8 @@ Implement an `is_valid` function that expects 2 arguments and returns a boolean.
 
 Arguments:
 
-  - hashed_password: bytes type
-  - password: string type
+  - `hashed_password`: `bytes` type
+  - `password`: string type
 
 Use `bcrypt` to validate that the provided password matches the hashed password.
 
