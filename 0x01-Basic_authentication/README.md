@@ -400,3 +400,125 @@ __Repo:__
   - File: `api/v1/app.py, api/v1/auth/basic_auth.py`
 
 ## 7. Basic - Base64 part
+
+Add the method `def extract_base64_authorization_header(self, authorization_header: str) -> str:` in the class `BasicAuth` that returns the Base64 part of the `Authorization` header for a Basic Authentication:
+
+  - Return `None` if `authorization_header` is `None`
+  - Return `None` if `authorization_header` is not a string
+  - Return `None` if `authorization_header` doesn’t start by `Basic` (with a space at the end)
+  - Otherwise, return the value after Basic (after the space)
+  - You can assume `authorization_header` contains only one `Basic`
+
+        bob@dylan:~$ cat main_2.py
+        #!/usr/bin/env python3
+        """ Main 2
+        """
+        from api.v1.auth.basic_auth import BasicAuth
+
+        a = BasicAuth()
+
+        print(a.extract_base64_authorization_header(None))
+        print(a.extract_base64_authorization_header(89))
+        print(a.extract_base64_authorization_header("Holberton School"))
+        print(a.extract_base64_authorization_header("Basic Holberton"))
+        print(a.extract_base64_authorization_header("Basic SG9sYmVydG9u"))
+        print(a.extract_base64_authorization_header("Basic SG9sYmVydG9uIFNjaG9vbA=="))
+        print(a.extract_base64_authorization_header("Basic1234"))
+
+        bob@dylan:~$
+        bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_2.py
+        None
+        None
+        None
+        Holberton
+        SG9sYmVydG9u
+        SG9sYmVydG9uIFNjaG9vbA==
+        None
+        bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x01-Basic_authentication`
+  - File: `api/v1/auth/basic_auth.py`
+
+## 8. Basic - Base64 decode
+
+Add the method `def decode_base64_authorization_header(self, base64_authorization_header: str) -> str:` in the class `BasicAuth` that returns the decoded value of a Base64 string `base64_authorization_header:`
+
+  - Return `None` if `base64_authorization_header` is `None`
+  - Return `None` if `base64_authorization_header` is not a string
+  - Return `None` if `base64_authorization_header` is not a valid Base64 - you can use `try/except`
+  - Otherwise, return the decoded value as UTF8 string - you can use `decode('utf-8')`
+
+        bob@dylan:~$ cat main_3.py
+        #!/usr/bin/env python3
+        """ Main 3
+        """
+        from api.v1.auth.basic_auth import BasicAuth
+
+        a = BasicAuth()
+
+        print(a.decode_base64_authorization_header(None))
+        print(a.decode_base64_authorization_header(89))
+        print(a.decode_base64_authorization_header("Holberton School"))
+        print(a.decode_base64_authorization_header("SG9sYmVydG9u"))
+        print(a.decode_base64_authorization_header("SG9sYmVydG9uIFNjaG9vbA=="))
+        print(a.decode_base64_authorization_header(a.extract_base64_authorization_header("Basic SG9sYmVydG9uIFNjaG9vbA==")))
+
+        bob@dylan:~$
+        bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_3.py
+        None
+        None
+        None
+        Holberton
+        Holberton School
+        Holberton School
+        bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x01-Basic_authentication`
+  - File: `api/v1/auth/basic_auth.py`
+
+## 9. Basic - User credentials
+
+Add the method `def extract_user_credentials(self, decoded_base64_authorization_header: str) -> (str, str)` in the class `BasicAuth` that returns the user email and password from the Base64 decoded value.
+
+  - This method must return 2 values
+  - Return `None`, `None` if `decoded_base64_authorization_header` is `None`
+  - Return `None`, `None` if `decoded_base64_authorization_header` is not a string
+  - Return `None`, `None` if `decoded_base64_authorization_header` doesn’t contain :
+  - Otherwise, return the user email and the user password - these 2 values must be separated by a `:`
+  - You can assume `decoded_base64_authorization_header` will contain only one `:`
+
+        bob@dylan:~$ cat main_4.py
+        #!/usr/bin/env python3
+        """ Main 4
+        """
+        from api.v1.auth.basic_auth import BasicAuth
+
+        a = BasicAuth()
+
+        print(a.extract_user_credentials(None))
+        print(a.extract_user_credentials(89))
+        print(a.extract_user_credentials("Holberton School"))
+        print(a.extract_user_credentials("Holberton:School"))
+        print(a.extract_user_credentials("bob@gmail.com:toto1234"))
+
+        bob@dylan:~$
+        bob@dylan:~$ API_HOST=0.0.0.0 API_PORT=5000 ./main_4.py
+        (None, None)
+        (None, None)
+        (None, None)
+        ('Holberton', 'School')
+        ('bob@gmail.com', 'toto1234')
+        bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x01-Basic_authentication`
+  - File: `api/v1/auth/basic_auth.py`
+
