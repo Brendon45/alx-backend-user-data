@@ -773,3 +773,20 @@ __Repo:__
   - GitHub repository: `alx-backend-user-data`
   - Directory: `0x01-Basic_authentication`
   - File: `api/v1/auth/auth.py`
+
+_N.B_  ___If you are encountering errors in task 0 : 0. Simple-basic-API__
+
+__Solution__:
+
+### Update your requirements.txt as following:
+
+    Flask==1.1.2
+    Flask-Cors==3.0.8
+    itsdangerous==1.1.0
+    Jinja2==2.11.2
+    MarkupSafe==2.0.0
+    requests==2.18.4
+    pycodestyle==2.6.0
+    werkzeug==1.0.1
+
+ Downgrading the versions of `itsdangerous`, `MarkupSafe` and `werkzeug` ----will solve the issue
