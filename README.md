@@ -11,6 +11,8 @@ This repository consists of Backend User Data projects -  manages and processes 
 
 [0x00](https://github.com/Brendon45/alx-backend-user-data/tree/ed7a7b22888ae3ca838017e0452a112a79e0fab2/0x00-personal_data) : Examples of Personally Identifiable Information (PII); How to: implement a log filter that will obfuscate PII fields, encrypt a password and check the validity of an input password AND authenticate to a database using environment variables
 
+[0x01](https://github.com/Brendon45/alx-backend-user-data/tree/3f22a6733192e0e0be602fc77525cb37583d6247/0x01-Basic_authentication): What authentication means; What Base64 is; How to encode a string in Base64; What Basic authentication means; How to send the Authorization header.
+
 ## STAY TUNED!
 
 - More projects are coming soon!!
