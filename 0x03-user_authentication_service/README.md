@@ -62,25 +62,25 @@ The model will have the following attributes:
   - `session_id`, a nullable string
   - `reset_token`, a nullable string
 
-bob@dylan:~$ cat 0-main.py
-#!/usr/bin/env python3
-"""
-Main file
-"""
-from user import User
+  bob@dylan:~$ cat 0-main.py
+  #!/usr/bin/env python3
+  """
+  Main file
+  """
+  from user import User
 
-print(User.__tablename__)
+  print(User.__tablename__)
 
-for column in User.__table__.columns:
-    print("{}: {}".format(column, column.type))
+  for column in User.__table__.columns:
+      print("{}: {}".format(column, column.type))
 
-bob@dylan:~$ python3 0-main.py
-users
-users.id: INTEGER
-users.email: VARCHAR(250)
-users.hashed_password: VARCHAR(250)
-users.session_id: VARCHAR(250)
-users.reset_token: VARCHAR(250)
-bob@dylan:~$
+  bob@dylan:~$ python3 0-main.py
+  users
+  users.id: INTEGER
+  users.email: VARCHAR(250)
+  users.hashed_password: VARCHAR(250)
+  users.session_id: VARCHAR(250)
+  users.reset_token: VARCHAR(250)
+  bob@dylan:~$
 
 
