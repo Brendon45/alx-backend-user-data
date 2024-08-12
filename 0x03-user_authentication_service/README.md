@@ -641,3 +641,133 @@ __Repo__:
   - GitHub repository: alx-backend-user-data
   - Directory: 0x03-user_authentication_service
   - File: app.py
+
+## 15. User profile
+
+In this task, you will implement a `profile` function to respond to the `GET /profile` route.
+
+The request is expected to contain a `session_id` cookie. Use it to find the user. If the user exist, respond with a 200 HTTP status and the following JSON payload:
+
+    {"email": "<user email>"}
+
+If the session ID is invalid or the user does not exist, respond with a 403 HTTP status.
+
+    bob@dylan:~$ curl -XPOST localhost:5000/sessions -d 'email=bob@bob.com' -d 'password=mySuperPwd' -v
+    Note: Unnecessary use of -X or --request, POST is already inferred.
+    *   Trying 127.0.0.1...
+    * TCP_NODELAY set
+    * Connected to localhost (127.0.0.1) port 5000 (#0)
+    > POST /sessions HTTP/1.1
+    > Host: localhost:5000
+    > User-Agent: curl/7.58.0
+    > Accept: */*
+    > Content-Length: 37
+    > Content-Type: application/x-www-form-urlencoded
+    > 
+    * upload completely sent off: 37 out of 37 bytes
+    * HTTP 1.0, assume close after body
+    < HTTP/1.0 200 OK
+    < Content-Type: application/json
+    < Content-Length: 46
+    < Set-Cookie: session_id=75c89af8-1729-44d9-a592-41b5e59de9a1; Path=/
+    < Server: Werkzeug/1.0.1 Python/3.7.3
+    < Date: Wed, 19 Aug 2020 00:15:57 GMT
+    < 
+    {"email":"bob@bob.com","message":"logged in"}
+    * Closing connection 0
+    bob@dylan:~$
+    bob@dylan:~$ curl -XGET localhost:5000/profile -b "session_id=75c89af8-1729-44d9-a592-41b5e59de9a1"
+    {"email": "bob@bob.com"}
+    bob@dylan:~$ 
+    bob@dylan:~$ curl -XGET localhost:5000/profile -b "session_id=nope" -v
+    Note: Unnecessary use of -X or --request, GET is already inferred.
+    *   Trying 127.0.0.1...
+    * TCP_NODELAY set
+    * Connected to localhost (127.0.0.1) port 5000 (#0)
+    > GET /profile HTTP/1.1
+    > Host: localhost:5000
+    > User-Agent: curl/7.58.0
+    > Accept: */*
+    > Cookie: session_id=75c89af8-1729-44d9-a592-41b5e59de9a
+    > 
+    * HTTP 1.0, assume close after body
+    < HTTP/1.0 403 FORBIDDEN
+    < Content-Type: text/html; charset=utf-8
+    < Content-Length: 234
+    < Server: Werkzeug/1.0.1 Python/3.7.3
+    < Date: Wed, 19 Aug 2020 00:16:43 GMT
+    < 
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+    <title>403 Forbidden</title>
+    <h1>Forbidden</h1>
+    <p>You don't have the permission to access the requested resource. It is either read-protected or not readable by the server.</p>
+    * Closing connection 0
+
+    bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `app.py`
+
+## 16. Generate reset password token
+
+In this task, you will implement the `Auth.get_reset_password_token` method. It take an `email` string argument and returns a string.
+
+Find the user corresponding to the email. If the user does not exist, raise a `ValueError` exception. If it exists, generate a UUID and update the user’s `reset_token` database field. Return the token.
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `auth.py`
+
+## 17. Get reset password token
+
+In this task, you will implement a `get_reset_password_token `function to respond to the `POST /reset_password` route.
+
+The request is expected to contain form data with the `"email"` field.
+
+If the email is not registered, respond with a 403 status code. Otherwise, generate a token and respond with a 200 HTTP status and the following JSON payload:
+
+    {"email": "<user email>", "reset_token": "<reset token>"}
+
+__Repo__:
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `app.py`
+
+## 18. Update password
+
+In this task, you will implement the `Auth.update_password` method. It takes `reset_token` string argument and a `password` string argument and returns `None`.
+
+Use the `reset_token` to find the corresponding user. If it does not exist, raise a `ValueError` exception.
+
+Otherwise, hash the password and update the user’s hashed_password field with the new `hashed password` and the `reset_token` field to `None`.
+
+__Repo__:
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `auth.py`
+
+## 19. Update password end-point
+
+In this task you will implement the `update_password `function in the `app` module to respond to the `PUT /reset_password` route.
+
+The request is expected to contain form data with fields `"email"`, `"reset_token"` and `"new_password"`.
+
+Update the password. If the token is invalid, catch the exception and respond with a 403 HTTP code.
+
+If the token is valid, respond with a 200 HTTP code and the following JSON payload:
+
+    {"email": "<user email>", "message": "Password updated"}
+
+__Repo__:
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `app.py`
+
