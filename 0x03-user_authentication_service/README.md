@@ -130,22 +130,155 @@ Implement the `add_user` method, which has two required string arguments: `email
 
     bob@dylan:~$ cat 1-main.py
     #!/usr/bin/env python3
-"""
-Main file
-"""
+    """
+    Main file
+    """
 
-from db import DB
-from user import User
+    from db import DB
+    from user import User
 
-my_db = DB()
+    my_db = DB()
 
-user_1 = my_db.add_user("test@test.com", "SuperHashedPwd")
-print(user_1.id)
+    user_1 = my_db.add_user("test@test.com", "SuperHashedPwd")
+    print(user_1.id)
 
-user_2 = my_db.add_user("test1@test.com", "SuperHashedPwd1")
-print(user_2.id)
+    user_2 = my_db.add_user("test1@test.com", "SuperHashedPwd1")
+    print(user_2.id)
 
-bob@dylan:~$ python3 1-main.py
-1
-2
-bob@dylan:~$
+    bob@dylan:~$ python3 1-main.py
+    1
+    2
+    bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `db.py`
+
+## 2. Find user
+
+In this task you will implement the `DB.find_user_by` method. This method takes in arbitrary keyword arguments and returns the first row found in the `users` table as filtered by the method’s input arguments. No validation of input arguments required at this point.
+
+Make sure that SQLAlchemy’s `NoResultFound` and `InvalidRequestError` are raised when no results are found, or when wrong query arguments are passed, respectively.
+
+Warning:
+
+  - `NoResultFound` has been moved from `sqlalchemy.orm.exc` to `sqlalchemy.exc` between the version 1.3.x and 1.4.x of SQLAchemy - please make sure you are importing it from `sqlalchemy.orm.exc`
+
+        bob@dylan:~$ cat 2-main.py
+        #!/usr/bin/env python3
+        """
+        Main file
+        """
+        from db import DB
+        from user import User
+
+        from sqlalchemy.exc import InvalidRequestError
+        from sqlalchemy.orm.exc import NoResultFound
+
+
+        my_db = DB()
+
+        user = my_db.add_user("test@test.com", "PwdHashed")
+        print(user.id)
+
+        find_user = my_db.find_user_by(email="test@test.com")
+        print(find_user.id)
+
+        try:
+          find_user = my_db.find_user_by(email="test2@test.com")
+          print(find_user.id)
+        except NoResultFound:
+            print("Not found")
+
+        try:
+            find_user = my_db.find_user_by(no_email="test@test.com")
+            print(find_user.id)
+        except InvalidRequestError:
+           print("Invalid")        
+
+        bob@dylan:~$ python3 2-main.py
+        1
+        1
+        Not found
+        Invalid
+        bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `db.py`
+
+## 3. update user
+
+In this task, you will implement the `DB.update_user` method that takes as argument a required `user_id` integer and arbitrary keyword arguments, and returns `None`.
+
+The method will use `find_user_by` to locate the user to update, then will update the user’s attributes as passed in the method’s arguments then commit changes to the database.
+
+If an argument that does not correspond to a user attribute is passed, raise a `ValueError`.
+
+    bob@dylan:~$ cat main.py
+    #!/usr/bin/env python3
+    """
+    Main file
+    """
+    from db import DB
+    from user import User
+
+    from sqlalchemy.exc import InvalidRequestError
+    from sqlalchemy.orm.exc import NoResultFound
+
+
+    my_db = DB()
+
+    email = 'test@test.com'
+    hashed_password = "hashedPwd"
+
+    user = my_db.add_user(email, hashed_password)
+    print(user.id)
+
+    try:
+        my_db.update_user(user.id, hashed_password='NewPwd')
+        print("Password updated")
+    except ValueError:
+        print("Error")
+
+    bob@dylan:~$ python3 main.py
+    1
+    Password updated
+    bob@dylan:~$ 
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `db.py`
+
+## 4. Hash password
+
+In this task you will define a `_hash_password` method that takes in a `password` string arguments and returns bytes.
+
+The returned bytes is a salted hash of the input password, hashed with `bcrypt.hashpw`.
+
+    bob@dylan:~$ cat main.py
+    #!/usr/bin/env python3
+    """
+    Main file
+    """
+    from auth import _hash_password
+
+    print(_hash_password("Hello Holberton"))
+
+    bob@dylan:~$ python3 main.py
+    b'$2b$12$eUDdeuBtrD41c8dXvzh95ehsWYCCAi4VH1JbESzgbgZT.eMMzi.G2'
+    bob@dylan:~$
+
+__Repo__:
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `auth.py`
+
+## 
