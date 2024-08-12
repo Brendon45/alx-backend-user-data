@@ -281,4 +281,252 @@ __Repo__:
   - Directory: `0x03-user_authentication_service`
   - File: `auth.py`
 
+## 5. Register user
+
+In this task, you will implement the Auth.register_user in the Auth class provided below:
+
+    from db import DB
+
+
+    class Auth:
+        """Auth class to interact with the authentication database.
+        """
+
+        def __init__(self):
+            self._db = DB()
+
+Note that `Auth._db` is a private property and should NEVER be used from outside the class.
+
+`Auth.register_user` should take mandatory `email` and `password` string arguments and return a `User` object.
+
+If a user already exist with the passed email, raise a `ValueError` with the message `User <user's email> already exists`.
+
+If not, hash the password with `_hash_password`, save the user to the database using `self._db` and return the `User `object.
+
+    bob@dylan:~$ cat 5-main.py
+    #!/usr/bin/env python3
+    """
+    Main file
+    """
+    from auth import Auth
+
+    email = 'me@me.com'
+    password = 'mySecuredPwd'
+
+    auth = Auth()
+
+    try:
+        user = auth.register_user(email, password)
+        print("successfully created a new user!")
+    except ValueError as err:
+        print("could not create a new user: {}".format(err))
+
+    try:
+        user = auth.register_user(email, password)
+        print("successfully created a new user!")
+    except ValueError as err:
+        print("could not create a new user: {}".format(err))        
+
+    bob@dylan:~$ python3 5-main.py
+    successfully created a new user!
+    could not create a new user: User me@me.com already exists
+    bob@dylan:~$
+
+__Repo__:
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `auth.py`
+
+## 6. Basic Flask app
+
+In this task, you will set up a basic Flask app.
+
+Create a Flask app that has a single `GET` route (`"/"`) and use `flask.jsonify` to return a JSON payload of the form:
+
+    {"message": "Bienvenue"}
+
+Add the following code at the end of the module:
+
+    if __name__ == "__main__":
+        app.run(host="0.0.0.0", port="5000")
+
+___Repo__:
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `app.py`
+
+## 7. Register user
+
+In this task, you will implement the end-point to register a user. Define a `users` function that implements the `POST ``/users` route.
+
+Import the `Auth` object and instantiate it at the root of the module as such:
+
+    from auth import Auth
+
+
+    AUTH = Auth()
+
+The end-point should expect two form data fields: `"email" `and `"password"`. If the user does not exist, the end-point should register it and respond with the following JSON payload:
+
+    {"email": "<registered email>", "message": "user created"}
+
+If the user is already registered, catch the exception and return a JSON payload of the form
+
+    {"message": "email already registered"}
+
+and return a 400 status code
+
+Remember that you should only use `AUTH` in this app. `DB` is a lower abstraction that is proxied by `Auth`.
+
+__Terminal 1:__
+
+    bob@dylan:~$ python3 app.py 
+    * Serving Flask app "app" (lazy loading)
+      * Environment: production
+        WARNING: This is a development server. Do not use it in a production deployment.
+        Use a production WSGI server instead.
+        * Debug mode: off
+        * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+
+__Terminal 2:__
+
+    bob@dylan:~$ curl -XPOST localhost:5000/users -d 'email=bob@me.com' -d 'password=mySuperPwd' -v
+    Note: Unnecessary use of -X or --request, POST is already inferred.
+    *   Trying 127.0.0.1...
+    * TCP_NODELAY set
+    * Connected to localhost (127.0.0.1) port 5000 (#0)
+    > POST /users HTTP/1.1
+    > Host: localhost:5000
+    > User-Agent: curl/7.58.0
+    > Accept: */*
+    > Content-Length: 40
+    > Content-Type: application/x-www-form-urlencoded
+    > 
+    * upload completely sent off: 40 out of 40 bytes
+    * HTTP 1.0, assume close after body
+    < HTTP/1.0 200 OK
+    < Content-Type: application/json
+    < Content-Length: 52
+    < Server: Werkzeug/1.0.1 Python/3.7.3
+    < Date: Wed, 19 Aug 2020 00:03:18 GMT
+    < 
+    {"email":"bob@me.com","message":"user created"}
+
+    bob@dylan:~$
+    bob@dylan:~$ curl -XPOST localhost:5000/users -d 'email=bob@me.com' -d 'password=mySuperPwd' -v
+    Note: Unnecessary use of -X or --request, POST is already inferred.
+    *   Trying 127.0.0.1...
+    * TCP_NODELAY set
+    * Connected to localhost (127.0.0.1) port 5000 (#0)
+    > POST /users HTTP/1.1
+    > Host: localhost:5000
+    > User-Agent: curl/7.58.0
+    > Accept: */*
+    > Content-Length: 40
+    > Content-Type: application/x-www-form-urlencoded
+    > 
+    * upload completely sent off: 40 out of 40 bytes
+    * HTTP 1.0, assume close after body
+    < HTTP/1.0 400 BAD REQUEST
+    < Content-Type: application/json
+    < Content-Length: 39
+    < Server: Werkzeug/1.0.1 Python/3.7.3
+    < Date: Wed, 19 Aug 2020 00:03:33 GMT
+    < 
+    {"message":"email already registered"}
+    bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `app.py`
+
+## 8. Credentials validation
+
+In this task, you will implement the `Auth.valid_login `method. It should expect `email` and `password` required arguments and return a boolean.
+
+Try locating the user by email. If it exists, check the password with `bcrypt.checkpw`. If it matches return `True`. In any other case, return `False`.
+
+    bob@dylan:~$ cat main.py
+    #!/usr/bin/env python3
+    """
+    Main file
+    """
+    from auth import Auth
+
+    email = 'bob@bob.com'
+    password = 'MyPwdOfBob'
+    auth = Auth()
+
+    auth.register_user(email, password)
+
+    print(auth.valid_login(email, password))
+
+    print(auth.valid_login(email, "WrongPwd"))
+
+    print(auth.valid_login("unknown@email", password))
+
+    bob@dylan:~$ python3 main.py
+    True
+    False
+    False
+    bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `auth.py`
+
+## 9. Generate UUIDs
+
+In this task you will implement a `_generate_uuid` function in the `auth` module. The function should return a string representation of a new UUID. Use the `uuid` module.
+
+Note that the method is private to the `auth` module and should __NOT__ be used outside of it.
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `auth.py`
+
+## 10. Get session ID
+
+In this task, you will implement the `Auth.create_session` method. It takes an `email` string argument and returns the session ID as a string.
+
+The method should find the user corresponding to the email, generate a new UUID and store it in the database as the user’s `session_id`, then return the session ID.
+
+Remember that only public methods of `self._db` can be used.
+
+    bob@dylan:~$ cat main.py
+    #!/usr/bin/env python3
+    """
+    Main file
+    """
+    from auth import Auth
+
+    email = 'bob@bob.com'
+    password = 'MyPwdOfBob'
+    auth = Auth()
+
+    auth.register_user(email, password)
+
+    print(auth.create_session(email))
+    print(auth.create_session("unknown@email.com"))
+
+    bob@dylan:~$ python3 main.py
+    5a006849-343e-4a48-ba4e-bbd523fcca58
+    None
+    bob@dylan:~$
+
+__Repo:__
+
+  - GitHub repository: `alx-backend-user-data`
+  - Directory: `0x03-user_authentication_service`
+  - File: `auth.py`
+
 ## 
+
