@@ -22,6 +22,7 @@ def register_user(email: str, password: str) -> None:
         assert(resp.status_code == 400)
         assert (resp.json() == {"message": "email already registered"})
 
+
 def log_in_wrong_password(email: str, password: str) -> None:
     """
     Test for log in with the given wrong credentials.
@@ -35,6 +36,7 @@ def log_in_wrong_password(email: str, password: str) -> None:
                       data={'email': email, 'password': password})
     assert (r.status_code == 401)
 
+
 def profile_unlogged() -> None:
     """ Test for profile without being logged in with session_id.
     Returns:
@@ -42,6 +44,7 @@ def profile_unlogged() -> None:
     """
     r = requests.get('http://127.0.0.1:5000/profile')
     assert(r.status_code == 403)
+
 
 def log_in(email: str, password: str) -> str:
     """
@@ -58,6 +61,7 @@ def log_in(email: str, password: str) -> str:
     assert(resp.json() == {"email": email, "message": "logged in"})
     return resp.cookies['session_id']
 
+
 def profile_logged(session_id: str) -> None:
     """
     Test for profile with being logged in with session_id.
@@ -70,6 +74,7 @@ def profile_logged(session_id: str) -> None:
     r = requests.get('http://127.0.0.1:5000/profile',
                      cookies=cookies)
     assert(r.status_code == 200)
+
 
 def log_out(session_id: str) -> None:
     """
@@ -87,6 +92,7 @@ def log_out(session_id: str) -> None:
     else:
         assert(r.status_code == 200)
 
+
 def reset_password_token(email: str) -> str:
     """
     Test for reset password token with the given email.
@@ -100,6 +106,7 @@ def reset_password_token(email: str) -> str:
     if r.status_code == 200:
         return r.json()['reset_token']
     assert(r.status_code == 401)
+
 
 def update_password(email: str, reset_token: str,
                     new_password: str) -> None:
@@ -139,4 +146,3 @@ if __name__ == "__main__":
     reset_token = reset_password_token(EMAIL)
     update_password(EMAIL, reset_token, NEW_PASSWD)
     log_in(EMAIL, NEW_PASSWD)
-
