@@ -43,3 +43,17 @@ class DB:
         self._session.commit()
 
         return user
+
+    def find_user_by(self, **kwargs) -> User:
+        """
+        Returns first row(user) according to kwargs
+        """
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+        except TypeError:
+            raise InvalidRequestError
+
+        if not user:
+            raise NoResultFound
+
+        return user
