@@ -35,3 +35,10 @@ def log_in_wrong_password(email: str, password: str) -> None:
                       data={'email': email, 'password': password})
     assert (r.status_code == 401)
 
+def profile_unlogged() -> None:
+    """ Test for profile without being logged in with session_id.
+    Returns:
+        None
+    """
+    r = requests.get('http://127.0.0.1:5000/profile')
+    assert(r.status_code == 403)
