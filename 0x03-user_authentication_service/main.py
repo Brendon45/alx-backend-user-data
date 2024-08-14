@@ -87,3 +87,17 @@ def log_out(session_id: str) -> None:
     else:
         assert(r.status_code == 200)
 
+def reset_password_token(email: str) -> str:
+    """
+    Test for reset password token with the given email.
+    Args:
+        email: The email of the user.
+    Returns:
+        The reset_token of the user.
+    """
+    r = requests.post('http://127.0.0.1:5000/reset_password',
+                      data={'email': email})
+    if r.status_code == 200:
+        return r.json()['reset_token']
+    assert(r.status_code == 401)
+
